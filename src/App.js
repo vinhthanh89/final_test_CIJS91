@@ -1,23 +1,84 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Header from "./components/Header";
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import TodoList from "./components/TodoList";
+import Completed from "./Pages/Completed";
+import Active from "./Pages/Active";
+// import axios from 'axios'
+// import { BrowserRouter } from "react-router-dom";
 
 function App() {
+  const [todos, setTodos] = useState(
+    JSON.parse(localStorage.getItem("dataTodos")) || []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("dataTodos", JSON.stringify(todos));
+  }, [todos]);
+
+  const handleAddTodo = (newTodo) => {
+    setTodos([...todos, newTodo]);
+  };
+
+  const handleIsComplete = (taskId) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((taskItem) =>
+        taskItem.id === taskId
+          ? { ...taskItem, isCompleted: !taskItem.isCompleted }
+          : taskItem
+      )
+    );
+  };
+
+  const handleDeleteTask = (taskId) => {
+    setTodos((prevTodos) =>
+      prevTodos.filter((taskItem) => taskItem.id !== taskId)
+    );
+  };
+
+  const handleClearCompleted = () => {
+    setTodos((prevTodos) =>
+      prevTodos.filter((taskItem) => taskItem.isCompleted === false)
+    );
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <TodoList
+              todos={todos}
+              handleIsComplete={handleIsComplete}
+              handleAddTodo={handleAddTodo}
+            />
+          }
+        />
+        <Route
+          path="/completed"
+          element={
+            <Completed
+              todos={todos}
+              handleIsComplete={handleIsComplete}
+              handleDeleteTask={handleDeleteTask}
+              handleClearCompleted={handleClearCompleted}
+            />
+          }
+        />
+        <Route
+          path="/active"
+          element={
+            <Active
+              todos={todos}
+              handleIsComplete={handleIsComplete}
+              handleAddTodo={handleAddTodo}
+            />
+          }
+        />
+      </Routes>
     </div>
   );
 }

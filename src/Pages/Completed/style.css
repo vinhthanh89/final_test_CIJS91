@@ -1,0 +1,12 @@
+.button--clear-container{
+    text-align: right;
+    margin-top: 20px;
+}
+
+.btn--clear{
+    padding: 10px 20px;
+    background-color: red;
+    color: whitesmoke;
+    border: none;
+    border-radius: 8px;
+}

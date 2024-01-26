@@ -5,8 +5,6 @@ import { Routes, Route } from "react-router-dom";
 import TodoList from "./components/TodoList";
 import Completed from "./Pages/Completed";
 import Active from "./Pages/Active";
-// import axios from 'axios'
-// import { BrowserRouter } from "react-router-dom";
 
 function App() {
   const [todos, setTodos] = useState(

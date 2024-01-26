@@ -1,10 +1,7 @@
-// import { useState useEffect } from "react";
 
 import AddTodo from "../AddTodo";
 import Todo from "../Todo"
 import "./style.css"
-
-
 
 const TodoList = ({todos , handleIsComplete , handleAddTodo}) => {
 
@@ -14,7 +11,6 @@ const TodoList = ({todos , handleIsComplete , handleAddTodo}) => {
         <Todo
           todo={todo}
           handleIsComplete={handleIsComplete}
-          // handleDeleteTask={handleDeleteTask}
         />
       </div>
     );
